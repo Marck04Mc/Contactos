@@ -31,20 +31,14 @@ Asegúrate de tener instalado lo siguiente:
     npm install
     ```
 
-## Configuración de Base de Datos
-
-El proyecto está configurado por defecto para usar **SQL LocalDB**.
-
-1.  **Inicializar la Base de Datos:**
-    Desde la carpeta `backend`, ejecuta el script de configuración:
+4.  **Inicializar la Base de Datos (IMPORTANTE):**
+    
+    El proyecto usa **SQL LocalDB** por defecto. Para crear la base de datos y las tablas, ejecuta:
     ```bash
-    cd backend
+    cd ../backend
     node setup_db.js
     ```
-    *Este script se conectará a tu instancia local, creará la base de datos `TEST_FORM` y las tablas necesarias.*
-
-    > **Nota para usuarios de SQL Server estándar:**
-    > Si no usas LocalDB, edita el archivo `backend/.env` y `backend/db.js` con tus credenciales y servidor. Puedes usar el script `database/database_setup.sql` para crear la estructura manualmente.
+    *Si usas una instancia de SQL Server diferente, configura las variables en `backend/.env` antes de ejecutar este paso.*
 
 ## Ejecución
 
