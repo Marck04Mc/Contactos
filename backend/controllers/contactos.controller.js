@@ -1,19 +1,26 @@
 const { getConnection, sql } = require('../db');
 
 const getContactos = async (req, res) => {
+    console.log('Request received: getContactos');
     try {
         const pool = await getConnection();
+        console.log('Database connected, executing sp_ListarContactos');
         const result = await pool.request().execute('sp_ListarContactos');
+        console.log('Query result:', result.recordset);
         res.json(result.recordset);
     } catch (error) {
+        console.error('Error in getContactos:', error);
         res.status(500).send(error.message);
     }
 };
 
 const createContacto = async (req, res) => {
+    console.log('Request received: createContacto');
+    console.log('Payload:', req.body);
     const { TipoIdentificacion, Identificacion, Nombres, Apellido, Telefono, Direccion, Correo, Cliente } = req.body;
     try {
         const pool = await getConnection();
+        console.log('Database connected, executing sp_CrearContacto');
         await pool.request()
             .input('TipoIdentificacion', sql.VarChar, TipoIdentificacion)
             .input('Identificacion', sql.VarChar, Identificacion)
@@ -24,8 +31,10 @@ const createContacto = async (req, res) => {
             .input('Correo', sql.VarChar, Correo)
             .input('Cliente', sql.Bit, Cliente)
             .execute('sp_CrearContacto');
+        console.log('Contact created successfully');
         res.json({ message: 'Contacto creado exitosamente' });
     } catch (error) {
+        console.error('Error in createContacto:', error);
         res.status(500).send(error.message);
     }
 };

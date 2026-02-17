@@ -19,36 +19,54 @@ Asegúrate de tener instalado lo siguiente:
     cd <nombre-de-la-carpeta>
     ```
 
-2.  **Instalar dependencias del Backend:**
+2.  **Configurar la Base de Datos (CRÍTICO):**
+    
+    *   Abre SQL Server Management Studio (SSMS) o tu herramienta preferida.
+    *   Ejecuta el script ubicado en `database/database_setup.sql`. Este script creará la base de datos `TEST_FORM`, la tabla `Contactos` y los procedimientos almacenados necesarios.
+
+3.  **Configurar el Backend:**
+    
+    Ve a la carpeta del backend e instala las dependencias:
     ```bash
     cd backend
     npm install
     ```
 
-3.  **Instalar dependencias del Frontend:**
+    **Configuración del entorno (.env):**
+    Crea un archivo llamado `.env` en la carpeta `backend` y agrega lo siguiente. **Es muy importante que `DB_SERVER` coincida con tu instancia de SQL Server.**
+
+    *Para SQL LocalDB (Opción recomendada):*
+    ```ini
+    PORT=3000
+    DB_SERVER=(localdb)\MSSQLLocalDB
+    DB_DATABASE=TEST_FORM
+    ```
+
+    *Para SQL Server Express o versiones completas:*
+    ```ini
+    PORT=3000
+    DB_SERVER=localhost\SQLEXPRESS  # O el nombre de tu instancia
+    DB_DATABASE=TEST_FORM
+    ```
+
+4.  **Instalar dependencias del Frontend:**
+    
+    Abre una nueva terminal, ve a la carpeta del frontend e instala las dependencias:
     ```bash
     cd ../frontend
     npm install
     ```
 
-4.  **Inicializar la Base de Datos (IMPORTANTE):**
-    
-    El proyecto usa **SQL LocalDB** por defecto. Para crear la base de datos y las tablas, ejecuta:
-    ```bash
-    cd ../backend
-    node setup_db.js
-    ```
-    *Si usas una instancia de SQL Server diferente, configura las variables en `backend/.env` antes de ejecutar este paso.*
-
 ## Ejecución
 
-Para correr la aplicación, necesitas dos terminales (o pestañas):
+Para correr la aplicación, necesitas dos terminales ejecutándose simultáneamente:
 
 **Terminal 1 (Backend):**
 ```bash
 cd backend
 npm run dev
 # El servidor correrá en http://localhost:3000
+# Deberías ver el mensaje: "Server is running on port 3000"
 ```
 
 **Terminal 2 (Frontend):**
@@ -58,4 +76,4 @@ npm run dev
 # La aplicación correrá en http://localhost:5173
 ```
 
-¡Listo! Abre el enlace del frontend en tu navegador para usar la aplicación.
+¡Listo! Abre el enlace que muestra la terminal del frontend (usualmente `http://localhost:5173`) en tu navegador para usar la aplicación.
